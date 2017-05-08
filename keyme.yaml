@@ -1,0 +1,34 @@
+---
+accounts:
+  500px-base:
+      name: 500px-base
+      principal: 'arn:aws:iam::865042771378:saml-provider/500pxGoogleApps'
+      region: 'us-east-1'
+      role: 'arn:aws:iam::865042771378:role/500pxGAppsPlatform'
+      duration_seconds: 3600
+      sp: '293517734924'
+  500px-ec2:
+      name: 500px-ec2
+      principal: 'arn:aws:iam::297478900136:saml-provider/500pxGoogleApps'
+      region: 'us-east-1'
+      role: 'arn:aws:iam::297478900136:role/500pxGAppsPlatform'
+      duration_seconds: 3600
+      sp: '293517734924'
+  500px-jv:
+      name: 500px-jv
+      principal: 'arn:aws:iam::110131836444:saml-provider/500pxGoogleApps'
+      region: 'us-east-1'
+      role: 'arn:aws:iam::110131836444:role/500pxGAppsPlatform'
+      duration_seconds: 3600
+      sp: '293517734924'
+  500px-s3:
+      name: 500px-s3
+      principal: 'arn:aws:iam::534162234246:saml-provider/500pxGoogleApps'
+      region: 'us-east-1'
+      role: 'arn:aws:iam::534162234246:role/500pxGAppsPlatform'
+      duration_seconds: 3600
+      sp: '293517734924'
+google:
+    username: 'steve@500px.com'
+    idp: 'C02mxo447'
+

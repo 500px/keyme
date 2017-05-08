@@ -4,7 +4,7 @@ keyme and fetch_creds -- Tools for interacting with GOOGLE SAML SSO and AWS SAML
 
 from setuptools import find_packages, setup
 
-dependencies = ['click', 'boto3', 'bs4', 'beautifulsoup', 'requests', 'py']
+dependencies = ['click', 'boto3', 'bs4', 'beautifulsoup', 'requests', 'py', 'pyyaml']
 
 setup(name='keyme',
       version='0.6.0',
@@ -19,6 +19,7 @@ setup(name='keyme',
       entry_points = '''
         [console_scripts]
             fetch_creds=keyme.cli.fetch_creds:cli
+            px_creds=keyme.cli.px_aws_profiles:cli
         ''',
       platforms='any',
       zip_safe=False,
