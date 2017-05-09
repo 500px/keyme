@@ -164,7 +164,8 @@ def get(config, mfa, username, password, idp, sp, principal, role, region, env, 
         mfa = None
 
     print "Username: " + google_username
-    # print "MFA Code: " + mfa
+    if mfa:
+        print "MFA Code: " + mfa
     print "AWS Role" + aws_role
     print "AWS Principal Identity Provider: " + aws_principal
     print "Google idp: " + google_idp
