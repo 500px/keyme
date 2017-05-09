@@ -128,7 +128,7 @@ def setup(config, update):
 @pass_config
 @click.option('--mfa', '-m', is_flag=True, help="Enables MFA if disabled in default configuration")
 @click.option('--username', '-u', help="Allows overriding of the stored username")
-@click.option('--password', prompt=True, hide_input=True, confirmation_prompt=False)
+@click.option('--password', '-p', prompt=True, hide_input=True, confirmation_prompt=False)
 @click.option('--idp', '-i', help="Allows overrideing of the IDP id", default='C02mxo447')
 @click.option('--sp', '-s', help="Allows overriding of the store SP id ", default='293517734924')
 @click.option('--principal', '-a', help='Allows overriding of the store principal', default='arn:aws:iam::297478900136:saml-provider/500pxGoogleApps')
@@ -162,6 +162,15 @@ def get(config, mfa, username, password, idp, sp, principal, role, region, env, 
         mfa = click.prompt('Please enter MFA Token')
     else:
         mfa = None
+
+    print "Username: " + google_username
+    # print "MFA Code: " + mfa
+    print "AWS Role" + aws_role
+    print "AWS Principal Identity Provider: " + aws_principal
+    print "Google idp: " + google_idp
+    print "AWS SP: " + aws_sp
+    print "AWS Region: " + aws_region
+    print "Login Duration: " + str(duration_seconds)
 
     k = generate_keys(
         {'username': google_username,
