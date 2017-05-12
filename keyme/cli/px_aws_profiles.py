@@ -14,6 +14,8 @@ from keyme import KeyMe
 class Config(dict):
 
     def __init__(self, *args, **kwargs):
+        if not os.path.exists(py.path.local(os.path.expanduser('~/.aws/keyme.yaml')).dirname):
+            os.makedirs(py.path.local(os.path.expanduser('~/.aws/keyme.yaml')).dirname)
         self.config = py.path.local(os.path.expanduser('~/.aws/keyme.yaml'))  # A
         super(Config, self).__init__(*args, **kwargs)
 
@@ -54,13 +56,22 @@ def generate_keys(event, context={}):
                  principal=principal).key()
 
 def get_env_names(config, context={}):
-    return config['accounts'].keys()
+    if "accounts" in config:
+        return config['accounts'].keys()
+    else:
+        return []
 
 def get_env(config, env, context={}):
-    return config['accounts'][env]
+    if "accounts" in config and env in config['accounts']:
+        return config['accounts'][env]
+    else:
+        return {}
 
 def get_google_account(config, context={}):
-    return config['google']
+    if "google" in config:
+        return config['google']
+    else:
+        return {}
 
 def read_path(path, context={}):
     file_handle = open_path(path)
@@ -69,6 +80,7 @@ def read_path(path, context={}):
     return file_contents
 
 def open_path(path, mode='r', context={}):
+    py.path.local(os.path.expanduser(path)).ensure()
     return py.path.local(os.path.expanduser(path)).open(mode)
 
 def read_aws_config(aws_config_path, context={}):
@@ -85,8 +97,9 @@ def get_profiles_from_config_file(aws_file_path, context={}):
         match_dict = m.groupdict()
         profiles[match_dict['name']] = {}
         for keyval in match_dict['keys'].strip().split('\n'):
-            key, value = re.split("\s*=\s*(?=[^$])", keyval)
-            profiles[match_dict['name']][key.strip()] = value.strip()
+            match = re.match("^(?P<key>[^\n\r=]+)\s*=\s*(?P<value>[^\n\r]+)$", keyval)
+            if(match):
+                profiles[match_dict['name']][match.groupdict()["key"]] = match.groupdict()["value"]
     return profiles
 
 def get_profiles(aws_config_path="~/.aws/config", aws_credentials_path="~/.aws/credentials", context={}):
@@ -225,11 +238,6 @@ def setup(config, update):
     config[name] = data
     config.save()
 
-@cli.command('test')
-@pass_config
-def test(config):
-    put_profiles(get_profiles())
-
 @cli.command('profile')
 @pass_config
 @click.option('--awsaccount', '-e', help="AWS account name (from keyme config stanza)", required=True)
@@ -243,6 +251,12 @@ def profile(config, awsaccount, password, mfa, exports, default):
         click.echo("Password is required!")
     elif 'password' in google_account:
         password = google_account['password']
+
+    config_file_sample = "---\naccounts:\n    aws-account-name:\n    name: aws-account-name\n    profile: AWSCredentialProfileNameSTS\n    principal: 'arn:aws:iam::0000000000000:saml-provider/IAMProviderName'\n    region: 'us-east-1'\n    role: 'arn:aws:iam::0000000000000:role/IAMRoleName'\n    duration_seconds: 3600\n    sp: 'AWSSPId'\ngoogle:\n    username: 'user@domain.ext'\n    password: 'yourpassword' # optional; can be specified on the command line\n    idp: 'google_provider_id'"
+
+    if 'username' not in google_account:
+        click.echo("The google stanza of the config line is incomplete.  The config, ~/.aws/keyme.yaml should use the format:\n" + config_file_sample)
+        sys.exit(1)
 
     keys = get_keys(config, awsaccount, password, mfa)
 
