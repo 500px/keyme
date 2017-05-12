@@ -234,7 +234,7 @@ def test(config):
 @pass_config
 @click.option('--awsaccount', '-e', help="AWS account name (from keyme config stanza)", required=True)
 @click.option('--password', '-p', help="Enter your Google password to override config file.")
-@click.option('--mfa', '-m', help="Use MFA to login to Google.", required=True)
+@click.option('--mfa', '-m', help="Use MFA to login to Google.")
 @click.option('--exports', '-s', is_flag=True, help='Print export lines for AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_SESSION_TOKEN, AWS_DEFAULT_REGION.', default=False)
 @click.option('--default', '-d', is_flag=True, help="Output AWS_DEFAULT_PROFILE export line.", default=False)
 def profile(config, awsaccount, password, mfa, exports, default):
