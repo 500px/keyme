@@ -170,16 +170,16 @@ class KeyMe:
     def parse_google_saml(self):
         """Load and parse saml from google"""
         parsed = BeautifulSoup(self.session.text, 'html.parser')
-        saml_element = parsed.find('input', {'name':'SAMLResponse'}).get('value')
+        saml_element = parsed.find('input', {'name':'SAMLResponse'})
 
         try:
             if not saml_element:
-                raise StandardError, 'Could not get a SAML reponse, check credentials'
+                raise StandardError, 'Could not get a SAML reponse, check credentials (will fail if your login or mfa is being denied by google!)'
         except StandardError as e:
             print e
             sys.exit(1)
 
-        return saml_element
+        return saml_element.get('value')
 
     def login_to_sts(self, region):
         """Create an STS context via STS"""
