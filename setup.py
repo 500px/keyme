@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 dependencies = ['click', 'boto3', 'bs4', 'beautifulsoup', 'requests', 'py', 'pyyaml']
 
 setup(name='keyme',
-      version='0.6.0',
+      version='0.6.1',
       description='Google SAML STS login library',
       url='http://github.com/wheniwork/keyme',
       author='Richard Genthner',

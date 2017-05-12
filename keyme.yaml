@@ -2,6 +2,7 @@
 accounts:
   500px-base:
       name: 500px-base
+      profile: 500pxBaseSTS
       principal: 'arn:aws:iam::865042771378:saml-provider/500pxGoogleApps'
       region: 'us-east-1'
       role: 'arn:aws:iam::865042771378:role/500pxGAppsPlatform'
@@ -9,6 +10,7 @@ accounts:
       sp: '293517734924'
   500px-ec2:
       name: 500px-ec2
+      profile: 500pxEC2STS
       principal: 'arn:aws:iam::297478900136:saml-provider/500pxGoogleApps'
       region: 'us-east-1'
       role: 'arn:aws:iam::297478900136:role/500pxGAppsPlatform'
@@ -16,6 +18,7 @@ accounts:
       sp: '293517734924'
   500px-jv:
       name: 500px-jv
+      profile: 500pxJVSTS
       principal: 'arn:aws:iam::110131836444:saml-provider/500pxGoogleApps'
       region: 'us-east-1'
       role: 'arn:aws:iam::110131836444:role/500pxGAppsPlatform'
@@ -23,6 +26,7 @@ accounts:
       sp: '293517734924'
   500px-s3:
       name: 500px-s3
+      profile: 500pxS3STS
       principal: 'arn:aws:iam::534162234246:saml-provider/500pxGoogleApps'
       region: 'us-east-1'
       role: 'arn:aws:iam::534162234246:role/500pxGAppsPlatform'
